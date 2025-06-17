@@ -33,7 +33,7 @@ const Navbar = () => {
       </li>
 
       <li>
-        <Link href="/login" className="px-6 py-3 text-white font-bold rounded-md" style={{ backgroundColor: "#FF6A28" }}>Login</Link>
+        <Link href="/login" className="bg-primary px-8 py-2 rounded-md block text-white font-bold shadow-lg hover:shadow-primary/50 active:scale-95 transition-all" style={{ backgroundColor: "#FF6A28" }}>Login</Link>
       </li>
     </ul>
   </nav>

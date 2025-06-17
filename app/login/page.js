@@ -1,4 +1,3 @@
-
 import LoginForm from "@/components/auth/LoginForm";
 import SocialLogins from "@/components/auth/SocialLogins";
 

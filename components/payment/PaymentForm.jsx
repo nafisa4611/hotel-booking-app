@@ -70,7 +70,7 @@ const PaymentForm = () => {
         />
       </div>
 
-      <button type="submit" className="btn-primary w-full">
+      <button type="submit" className="bg-primary px-8 py-2 rounded-md block text-white font-bold shadow-lg hover:shadow-primary/50 active:scale-95 transition-all w-full" style={{ backgroundColor: "#FF6A28" }}>
         Pay Now ($10)
       </button>
     </form>

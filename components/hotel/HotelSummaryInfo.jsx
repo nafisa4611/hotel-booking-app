@@ -17,7 +17,7 @@ const HotelSummaryInfo = ({fromListPage}) => {
         <h2 className="text-2xl font-bold text-right">$124/night</h2>
         <p className=" text-right">Per Night for 4 Rooms</p>
         {
-          fromListPage ? (<button className="px-6 py-3 text-white font-bold rounded-md" style={{ backgroundColor: "#FF6A28" }}>Details</button>) : (<button style={{ backgroundColor: "#FF6A28" }}>Book</button>)
+          fromListPage ? (<button className="bg-primary px-8 py-2 rounded-md block text-white font-bold shadow-lg hover:shadow-primary/50 active:scale-95 transition-all" style={{ backgroundColor: "#FF6A28" }}>Details</button>) : (<button className="bg-primary px-4 py-2 rounded-md block text-white font-bold shadow-lg hover:shadow-primary/50 active:scale-95 transition-all" style={{ backgroundColor: "#FF6A28" }}>Book</button>)
         }
       </div>
     </>
