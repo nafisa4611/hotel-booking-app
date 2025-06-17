@@ -1,8 +1,10 @@
-
 import Link from "next/link"
 import Image from "next/image"
+import { auth } from "@/auth"
+import Logout from "./auth/Logout";
 
-const Navbar = ({ sideMenu }) => {
+const Navbar = async ({ sideMenu }) => {
+  const session = await auth();
   return (
     <nav className="max-w-7xl flex mx-auto justify-between px-4 py-4 absolute top-0 w-full left-0 right-0 z-50">
       <Link href="/">
@@ -35,7 +37,17 @@ const Navbar = ({ sideMenu }) => {
             </li>
 
             <li>
-              <Link href="/login" className="bg-primary px-8 py-2 rounded-md block text-white font-bold shadow-lg hover:shadow-primary/50 active:scale-95 transition-all" style={{ backgroundColor: "#FF6A28" }}>Login</Link>
+              {
+                session?.user ? (
+                  <div className="px-4 py-2 rounded-md block text-white font-bold shadow-lg hover:shadow-primary/50 active:scale-95 transition-all" style={{ backgroundColor: "#FF6A28" }}>
+                    <span className="mx-1"> {session?.user?.name} </span>
+                    <span> | </span>
+                    <Logout />
+                  </div>
+                ) : (<Link href="/login" className="px-8 py-2 rounded-md block text-white font-bold shadow-lg hover:shadow-primary/50 active:scale-95 transition-all" style={{ backgroundColor: "#FF6A28" }}>
+                  Login
+                </Link>)
+              }
             </li>
           </ul>
         )
