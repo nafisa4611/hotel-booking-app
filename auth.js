@@ -1,21 +1,23 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import FacebookProvider from "next-auth/providers/facebook";
-import mongoClientPromise from "./database/mongoClientPromise";
+import CredentialsProvider from "next-auth/providers/credentials";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
-import CredentialProvider from "next-auth/providers/credentials";
+import mongoClientPromise from "./database/mongoClientPromise";
 import { userModel } from "./models/user-model";
+import bcrypt from "bcryptjs";
 
 export const {
-    handlers: {GET, POST},
+    handlers: { GET, POST },
     auth,
     signIn,
-    signOut
+    signOut,
 } = NextAuth({
-    adapter: MongoDBAdapter(mongoClientPromise, {databaseName: process.env.MONGODB_DB_NAME
-}),
+    adapter: MongoDBAdapter(mongoClientPromise, {databaseName: process.env.ENVIRONMENT }),
+    session: {
+        strategy: 'jwt',
+    },
     providers: [
-        CredentialProvider({
+        CredentialsProvider({
             credentials: {
                 email: {},
                 password: {},
@@ -28,7 +30,10 @@ export const {
                     const user = await userModel.findOne({email: credentials.email});
                     console.log({user})
                     if (user) {
-                        const isMatch = user.email === credentials.email;
+                        const isMatch = await bcrypt.compare(
+                            credentials.password,
+                            user.password
+                        );
                         if(isMatch) {
                             return user;
                         } else {
@@ -45,10 +50,6 @@ export const {
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        }),
-        FacebookProvider({
-            clientId: process.env.FACEBOOK_CLIENT_ID,
-            clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-        })
+          }),
     ]
 })
